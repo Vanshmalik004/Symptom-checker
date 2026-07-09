@@ -1,0 +1,58 @@
+[
+  {
+    "condition": "Viral Fever",
+    "description": "A temporary increase in body temperature caused by a viral infection (influenza, dengue, adenovirus). Symptoms include high temperature, chills, fatigue, body aches, and mild dehydration.",
+    "severity": "Mild",
+    "specialty": "General Physician",
+    "advice": "Drink plenty of fluids (water, oral rehydration solutions). Rest in a cool room. Take paracetamol as advised by a doctor for fever relief. Monitor temperature hourly.",
+    "references": ["WHO Guidelines on Fever Management", "CDC Influenza Resources"]
+  },
+  {
+    "condition": "Common Cold",
+    "description": "A viral infection of your nose and throat (upper respiratory tract). It's usually harmless, caused by rhinoviruses, leading to nasal congestion, sneezing, runny nose, and sore throat.",
+    "severity": "Mild",
+    "specialty": "General Physician",
+    "advice": "Stay hydrated. Rest. Use saline nasal drops to relieve congestion. Warm saltwater gargles can soothe a sore throat. Use a humidifier.",
+    "references": ["NHS Common Cold Guide", "CDC Rhinovirus Factsheets"]
+  },
+  {
+    "condition": "Migraine",
+    "description": "A neurological condition characterized by recurrent, intense, throbbing headaches, typically affecting one side of the head. Often accompanied by nausea, vomiting, and sensitivity to light and sound.",
+    "severity": "Moderate",
+    "specialty": "Neurologist",
+    "advice": "Rest in a dark, quiet room. Apply a cool compress to the forehead. Keep a headache diary to identify triggers (lack of sleep, specific foods). Take prescribed medication early in the attack.",
+    "references": ["American Migraine Foundation Guidelines", "MedlinePlus Migraine Reference"]
+  },
+  {
+    "condition": "Pneumonia",
+    "description": "An infection that inflames the air sacs in one or both lungs, which may fill with fluid or pus, causing cough with phlegm, fever, chills, and difficulty breathing. Can be bacterial, viral, or fungal.",
+    "severity": "Severe",
+    "specialty": "Pulmonologist",
+    "advice": "Immediate clinical evaluation is required. Complete any prescribed antibiotic course fully. Rest and use a pulse oximeter to monitor oxygen levels. Go to the ER if breathing becomes extremely difficult.",
+    "references": ["WHO Pneumonia Fact Sheet", "CDC Pneumonia Prevention and Treatment"]
+  },
+  {
+    "condition": "Coronary Artery Disease / Angina",
+    "description": "A cardiovascular condition where the main blood vessels supplying the heart struggle to send enough blood, oxygen, and nutrients, often presenting as chest pain, pressure, or shortness of breath.",
+    "severity": "Severe",
+    "specialty": "Cardiologist",
+    "advice": "This is a potentially critical heart condition. Avoid any strenuous activity. Rest and take prescribed nitroglycerin if available. Immediately go to the nearest emergency department if chest pain radiates to your arm, neck, or jaw.",
+    "references": ["American Heart Association CAD Guidelines", "MedlinePlus Coronary Heart Disease"]
+  },
+  {
+    "condition": "Contact Dermatitis / Allergy",
+    "description": "An inflammatory skin reaction caused by direct contact with an allergen or irritant (such as soaps, cosmetics, plants, or metals), leading to a red, itchy rash, bumps, or dry, cracked skin.",
+    "severity": "Mild",
+    "specialty": "Dermatologist",
+    "advice": "Identify and avoid the offending substance. Apply cool, wet compresses to soothe the skin. Use over-the-counter hydrocortisone cream or calamine lotion to relieve itching. Avoid scratching to prevent secondary infection.",
+    "references": ["NHS Contact Dermatitis Guide", "MedlinePlus Dermatitis Guide"]
+  },
+  {
+    "condition": "Gastroenteritis / Food Poisoning",
+    "description": "An inflammation of the stomach and intestines caused by a viral, bacterial, or parasitic infection, leading to watery diarrhea, abdominal cramps, nausea, vomiting, and sometimes fever.",
+    "severity": "Moderate",
+    "specialty": "Gastroenterologist",
+    "advice": "Focus heavily on rehydration to prevent electrolyte loss. Take small sips of water, broth, or ORS. Follow a bland diet (bananas, rice, applesauce, toast) when ready. Seek medical attention if vomiting persists beyond 24 hours.",
+    "references": ["CDC Foodborne Germs and Illnesses", "MedlinePlus Gastroenteritis Information"]
+  }
+]

@@ -1,0 +1,47 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  fullName    String
+  password    String
+  createdAt   DateTime     @default(now())
+  assessments Assessment[]
+}
+
+model Assessment {
+  id                 String   @id @default(uuid())
+  userId             Int
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  age                Int
+  gender             String
+  duration           String
+  existingConditions String?
+  symptoms           String   @db.Text
+  possibleCondition  String   @db.Text
+  explanation        String   @db.Text
+  severity           String
+  specialty          String
+  healthAdvice       String   @db.Text
+  language           String   @default("en")
+  chatHistory        String?  @db.Text
+  createdAt          DateTime @default(now())
+  
+  // Phase 2 fields
+  weight             Float?
+  height             Float?
+  painLevel          Int?
+  currentMedications String?  @db.Text
+  allergies          String?  @db.Text
+  pregnancyStatus    String?
+  primarySymptoms    String?  @db.Text
+  secondarySymptoms  String?  @db.Text
+  analysisResult     String?  @db.Text
+}
