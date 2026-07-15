@@ -316,3 +316,122 @@ body.dark .auth-wrapper {
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
+
+/* @media print layouts for Clinical Reports */
+@media print {
+  /* Reset all Dooper Health color tokens to clean high-contrast light mode for print */
+  :root, body, body.dark {
+    --bg-color: #ffffff !important;
+    --bg-card: #ffffff !important;
+    --text-color: #0f172a !important;
+    --text-muted: #475569 !important;
+    --border-color: #cbd5e1 !important;
+    --primary-color: #be123c !important;
+    --primary-light: #fff1f2 !important;
+    --primary-light-border: #fecdd3 !important;
+  }
+
+  /* Force background printing behavior in browsers */
+  html, body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide navigation, sidebar, chat widgets, and actions */
+  aside,
+  header,
+  nav,
+  .no-print,
+  .btn,
+  button,
+  a {
+    display: none !important;
+  }
+
+  /* Reset layout margins for sidebar offset */
+  div[style*="marginLeft: 260px"],
+  div[style*="marginLeft:260px"] {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure card containers look like standard clinical files */
+  .card {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    page-break-inside: avoid;
+    background-color: #ffffff !important;
+  }
+
+  /* Reset grid layout columns to show stacked */
+  div[style*="gridTemplateColumns"] {
+    display: block !important;
+  }
+
+  /* Progress bar updates for print */
+  div[style*="backgroundColor: var(--border-color)"] {
+    background-color: #e2e8f0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  div[style*="backgroundColor: var(--primary-color)"] {
+    background-color: #be123c !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Badge colors */
+  .badge-success {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-warning {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-danger {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force high contrast text colors for base elements */
+  h1, h2, h3, h4, h5, h6, p, td, th, li, label, span {
+    color: #0f172a !important;
+  }
+
+  /* Maintain alert banner urgency styling */
+  div[style*="backgroundColor: #fee2e2"] {
+    background-color: #fee2e2 !important;
+    border: 2px solid #ef4444 !important;
+    color: #b91c1c !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  div[style*="backgroundColor: #fee2e2"] h1,
+  div[style*="backgroundColor: #fee2e2"] h2,
+  div[style*="backgroundColor: #fee2e2"] h3,
+  div[style*="backgroundColor: #fee2e2"] h4,
+  div[style*="backgroundColor: #fee2e2"] span,
+  div[style*="backgroundColor: #fee2e2"] div {
+    color: #b91c1c !important;
+  }
+}

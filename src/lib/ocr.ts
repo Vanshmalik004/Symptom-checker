@@ -3,12 +3,41 @@ import { createWorker } from "tesseract.js";
 
 const require = createRequire(import.meta.url);
 
+// Polyfill DOM classes for pdf-parse in Node environment
+if (typeof globalThis.DOMMatrix === "undefined") {
+  (globalThis as any).DOMMatrix = class DOMMatrix {};
+}
+if (typeof globalThis.ImageData === "undefined") {
+  (globalThis as any).ImageData = class ImageData {};
+}
+if (typeof globalThis.Path2D === "undefined") {
+  (globalThis as any).Path2D = class Path2D {};
+}
+
+// Preload PDF.js worker message handler to prevent dynamic worker imports in Next.js
+if (typeof (globalThis as any).pdfjsWorker === "undefined") {
+  (globalThis as any).pdfjsWorker = require("pdfjs-dist/legacy/build/pdf.worker.min.mjs");
+}
+
 /**
  * Extracts text from a PDF buffer
  */
 export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   try {
-    const pdf = require("pdf-parse");
+    const pdfModule = require("pdf-parse");
+    
+    // Handle newer class-based API
+    if (pdfModule && pdfModule.PDFParse) {
+      const instance = new pdfModule.PDFParse({ data: buffer });
+      const result = await instance.getText();
+      return result.text || "";
+    }
+    
+    // Fallback to older function-based API
+    const pdf = typeof pdfModule === "function" ? pdfModule : pdfModule.default;
+    if (typeof pdf !== "function") {
+      throw new Error("Resolved pdf-parse module is not a function");
+    }
     const result = await pdf(buffer);
     return result.text || "";
   } catch (error) {

@@ -32,6 +32,7 @@ if (!globalForPrisma.prisma) {
       params.set("sslaccept", "accept_invalid_certs");
       params.set("connect_timeout", "30");
       params.set("pool_timeout", "30");
+      params.set("allowPublicKeyRetrieval", "true");
       
       const portString = port ? `:${port}` : "";
       formattedUrl = `mariadb://${encodedUser}:${encodedPass}@${host}${portString}/${db}?${params.toString()}`;

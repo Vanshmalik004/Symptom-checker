@@ -15,6 +15,9 @@ interface PossibleCondition {
   confidence: number;
   explanation: string;
   supportingSymptoms?: string;
+  matchingSymptoms?: string[];
+  missingSymptoms?: string[];
+  reasoning?: string;
 }
 
 interface AssessmentDetails {
@@ -416,7 +419,7 @@ export default function AssessmentDetailsPage() {
                       {index + 1}. {item.condition}
                     </div>
                     <div style={{ fontSize: "0.9rem", fontWeight: 800, color: "var(--primary-color)" }}>
-                      {item.confidence}% Confidence
+                      {item.confidence}% Probability Score
                     </div>
                   </div>
                   {/* Progress Bar Container */}
@@ -432,9 +435,30 @@ export default function AssessmentDetailsPage() {
                   <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "0.5rem" }}>
                     {item.explanation}
                   </p>
+                  
+                  {/* Matching and Missing Symptoms Badges */}
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+                    {item.matchingSymptoms && item.matchingSymptoms.length > 0 && (
+                      <div style={{ fontSize: "0.75rem", color: "#065f46", backgroundColor: "#d1fae5", padding: "0.25rem 0.5rem", borderRadius: "var(--radius-sm)", display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                        <span>🟢 Matching:</span> <strong>{item.matchingSymptoms.join(", ")}</strong>
+                      </div>
+                    )}
+                    {item.missingSymptoms && item.missingSymptoms.length > 0 && (
+                      <div style={{ fontSize: "0.75rem", color: "#991b1b", backgroundColor: "#fee2e2", padding: "0.25rem 0.5rem", borderRadius: "var(--radius-sm)", display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                        <span>🔴 Missing:</span> <strong>{item.missingSymptoms.join(", ")}</strong>
+                      </div>
+                    )}
+                  </div>
+
+                  {item.reasoning && (
+                    <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", fontStyle: "italic", marginBottom: "0.5rem" }}>
+                      <strong>Reasoning:</strong> {item.reasoning}
+                    </div>
+                  )}
+
                   {item.supportingSymptoms && (
                     <div style={{ fontSize: "0.8rem", color: "var(--primary-color)", fontWeight: 600, backgroundColor: "var(--primary-light)", padding: "0.5rem 0.75rem", borderRadius: "var(--radius-sm)", display: "inline-block" }}>
-                      🔍 <strong>Supporting Symptoms:</strong> {item.supportingSymptoms}
+                      🔍 <strong>Evidence Context:</strong> {item.supportingSymptoms}
                     </div>
                   )}
                 </div>

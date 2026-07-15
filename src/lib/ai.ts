@@ -27,6 +27,9 @@ export interface PossibleCondition {
   confidence: number;
   explanation: string;
   supportingSymptoms: string; // Explains why it matches the patient's symptoms
+  matchingSymptoms?: string[];
+  missingSymptoms?: string[];
+  reasoning?: string;
 }
 
 export interface SymptomAnalysis {
@@ -309,7 +312,11 @@ export async function analyzeSymptoms(patient: PatientCase): Promise<SymptomAnal
         ${fdaContext || "No drug data found."}
 
         Instructions:
-        1. Formulate the top 3 possible conditions with confidence percentages (0-100), brief descriptions (explanation), and a field "supportingSymptoms" explaining exactly why each condition matches the user's specific symptoms.
+        1. Formulate the top 5 possible conditions with confidence percentages (0-100), brief descriptions (explanation), and these explainable AI fields:
+           - "supportingSymptoms": explains why it matches the user's specific symptoms.
+           - "matchingSymptoms": an array of patient's symptoms that match this condition.
+           - "missingSymptoms": an array of typical symptoms for this condition that the patient does NOT have.
+           - "reasoning": detailed clinical reasoning explaining why this condition was suggested.
         2. Assign a severity level: "Mild", "Moderate", or "Severe".
         3. Recommend a medical specialty department (e.g. General Physician, Cardiologist, Neurologist, Pulmonologist, Dermatologist, Gastroenterologist, Gynecologist, ENT Specialist).
         4. Give detailed self-care advice (healthAdvice), taking any drug warnings, BMI status, existing conditions, or allergies into consideration. Avoid recommending prescription medicines.
@@ -331,9 +338,18 @@ export async function analyzeSymptoms(patient: PatientCase): Promise<SymptomAnal
                 condition: { type: Type.STRING },
                 confidence: { type: Type.INTEGER },
                 explanation: { type: Type.STRING },
-                supportingSymptoms: { type: Type.STRING }
+                supportingSymptoms: { type: Type.STRING },
+                matchingSymptoms: {
+                  type: Type.ARRAY,
+                  items: { type: Type.STRING }
+                },
+                missingSymptoms: {
+                  type: Type.ARRAY,
+                  items: { type: Type.STRING }
+                },
+                reasoning: { type: Type.STRING }
               },
-              required: ["condition", "confidence", "explanation", "supportingSymptoms"]
+              required: ["condition", "confidence", "explanation", "supportingSymptoms", "matchingSymptoms", "missingSymptoms", "reasoning"]
             }
           },
           severity: { type: Type.STRING, enum: ["Mild", "Moderate", "Severe"] },
@@ -424,13 +440,27 @@ export async function analyzeSymptoms(patient: PatientCase): Promise<SymptomAnal
   scoredMatches.sort((a, b) => b.score - a.score);
 
   const matchedDocs = scoredMatches.map(m => m.doc);
-  const possibleConditions: PossibleCondition[] = matchedDocs.slice(0, 3).map((doc, idx) => {
-    const conf = idx === 0 ? 85 : idx === 1 ? 60 : 35;
+  const possibleConditions: PossibleCondition[] = matchedDocs.slice(0, 5).map((doc, idx) => {
+    const conf = idx === 0 ? 85 : idx === 1 ? 70 : idx === 2 ? 55 : idx === 3 ? 40 : 25;
+    
+    // Simulate matching symptoms by filtering overlapping words
+    const matchedWords: string[] = [];
+    const words = query.split(/\W+/).filter(w => w.length > 3);
+    const docDescLower = doc.description.toLowerCase();
+    words.forEach(w => {
+      if (docDescLower.includes(w) && !matchedWords.includes(w)) {
+        matchedWords.push(w);
+      }
+    });
+
     return {
       condition: doc.condition,
       confidence: conf,
       explanation: doc.description,
-      supportingSymptoms: `Patient reports: "${symptoms.slice(0, 60)}${symptoms.length > 60 ? "..." : ""}" which overlaps with clinical signs of ${doc.condition}.`
+      supportingSymptoms: `Patient reports: "${symptoms.slice(0, 60)}${symptoms.length > 60 ? "..." : ""}" which overlaps with clinical signs of ${doc.condition}.`,
+      matchingSymptoms: matchedWords.length > 0 ? matchedWords : ["Intake Symptoms"],
+      missingSymptoms: ["Typical severe indicators not present"],
+      reasoning: `Matched via offline clinical database keywords: ${doc.condition} (${doc.specialty} department).`
     };
   });
 
@@ -440,7 +470,10 @@ export async function analyzeSymptoms(patient: PatientCase): Promise<SymptomAnal
       condition: "General Health Concern",
       confidence: 65,
       explanation: "Your symptoms do not match our standard diagnostic guidelines database. Requires assessment by a clinical physician.",
-      supportingSymptoms: "Symptom description contains general indicators that require physical vital screening."
+      supportingSymptoms: "Symptom description contains general indicators that require physical vital screening.",
+      matchingSymptoms: ["General symptoms"],
+      missingSymptoms: ["Standard disease markers"],
+      reasoning: "Symptom profile is non-specific or matches multiple clinical categories outside our local guidelines."
     });
   }
 

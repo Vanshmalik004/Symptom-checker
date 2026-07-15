@@ -428,6 +428,61 @@ export default function DashboardPage() {
         </p>
       </div>
 
+      {/* Premium Interactive Consultation Callout */}
+      <div style={{
+        padding: "1.75rem",
+        background: "linear-gradient(135deg, #be123c 0%, #881337 100%)",
+        color: "#ffffff",
+        borderRadius: "var(--radius-lg)",
+        boxShadow: "0 10px 25px -5px rgba(190, 18, 60, 0.15)",
+        marginBottom: "2rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: "1.5rem"
+      }}>
+        <div style={{ flex: "1 1 500px" }}>
+          <span style={{
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            padding: "0.25rem 0.75rem",
+            borderRadius: "9999px",
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+            display: "inline-block",
+            marginBottom: "0.5rem"
+          }}>
+            New: Interactive Triage Flow
+          </span>
+          <h3 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "0.5rem" }}>
+            Smart AI Consultation
+          </h3>
+          <p style={{ fontSize: "0.85rem", opacity: 0.9, lineHeight: 1.5 }}>
+            Upgrade your checkup to an interactive dialogue. Our AI clinical triage assistant will ask dynamic follow-up questions, retrieve trusted medical knowledge base citations, perform emergency safety checks, and compile a formal clinical triage report.
+          </p>
+        </div>
+        <Link
+          href="/dashboard/consultation"
+          style={{
+            backgroundColor: "#ffffff",
+            color: "#be123c",
+            fontWeight: 700,
+            padding: "0.75rem 1.5rem",
+            borderRadius: "var(--radius-md)",
+            textDecoration: "none",
+            boxShadow: "var(--shadow-md)",
+            transition: "var(--transition)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem"
+          }}
+        >
+          <span>💬</span> Start Consultation
+        </Link>
+      </div>
+
       {/* Stats Grid */}
       <div style={{
         display: "grid",
